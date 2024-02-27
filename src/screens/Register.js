@@ -1,53 +1,48 @@
-import React, { useEffect, useState } from 'react'
-import './Register.css'
+import React, { useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+const expensiveCalculation = (num) => {
+    console.log("Calculating...");
+    for (let i = 0; i < 1000000; i++) {
+        num += 1;
+    }
+    return num;
+};
 
 function Register() {
+    const [count, setCount] = useState(0);
+    const [todos, setTodos] = useState([]);
+    const calculation = useMemo(() => expensiveCalculation(count), [count]);
+    const navigate = useNavigate();
 
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [age, setAge] = useState(13);
+    const increment = () => {
+        setCount((c) => c + 1);
+    };
 
-
-
-    function handleRegister(event) {
-        event.preventDefault();
-        console.log("Hello World")
-    }
-
-    function increaseAge(event) {
-        event.preventDefault();
-        setAge(age + 1);
-    }
-
-    useEffect(() => {
-        console.log("age: ", age);
-    }, [age]);
+    const addTodo = () => {
+        setTodos((t) => [...t, "Todo Task"]);
+    };
 
     return (
-
-        <form>
-            {age > 18 ? (
-                <div>
-                    <h1>{age}</h1>
-                    <input className="form-input"
-                        type="email"
-                        placeholder="Enter Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    ></input>
-                    <input className="form-input"
-                        type="password"
-                        placeholder="Enter Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    ></input>
-                    <button onClick={handleRegister}>Submit</button>
-                </div>
-            ) : (<h1>You are not 18</h1>
-            )}
-            <button onClick={increaseAge}>Increase</button>
-        </form >
-    )
+        <div>
+            <div>
+                <h2>My Todos</h2>
+                {todos.map((todo, index) => {
+                    return <p key={index}>{todo}</p>;
+                })}
+                <button onClick={addTodo}>Add Todo</button>
+            </div>
+            <hr />
+            <div>
+                Count: {count}
+                <button onClick={increment}>+</button>
+                <h2>Expensive Calculation</h2>
+                {calculation}
+            </div>
+            <button onClick={() => navigate("/UserList")}>Take me to User List Screen</button>
+            {/*<Link to={"/UserList"}>Take me to User List Screen</Link>*/}
+        </div>
+    );
 }
 
-export default Register
+export default Register;
