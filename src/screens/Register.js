@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const expensiveCalculation = (num) => {
     console.log("Calculating...");
@@ -14,6 +15,7 @@ function Register() {
     const [todos, setTodos] = useState([]);
     const calculation = useMemo(() => expensiveCalculation(count), [count]);
     const navigate = useNavigate();
+    const value = useSelector(state => state.value);
 
     const increment = () => {
         setCount((c) => c + 1);
@@ -26,6 +28,7 @@ function Register() {
     return (
         <div>
             <div>
+                <h1>{value}</h1>
                 <h2>My Todos</h2>
                 {todos.map((todo, index) => {
                     return <p key={index}>{todo}</p>;
