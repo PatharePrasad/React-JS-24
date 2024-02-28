@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Title from './Title'
+import { CountContext } from '../context/CountContext'
 
-function UserCard({name, email, rollNo}) {
+function UserCard() {
+    const { count } = useContext(CountContext);
     return (
         <div>
-            <Title name={name} />
-            <p>{email}</p>
-            <p>{rollNo}</p>
+            <Title name={count} />
         </div>
     )
 };
