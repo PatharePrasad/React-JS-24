@@ -14,12 +14,17 @@ function Contact() {
         setCount(count + 1);
     };
 
+    const decrement = () => {
+        setCount(count - 1)
+    }
+
     return (
         <div>
             <UserCard />
             <h1>Value: {value}</h1>
             <h1>ContextValue: {count}</h1>
             <button onClick={increment}>Increase count value</button>
+            <button onClick={decrement}>Decrease count value</button>
             <button onClick={() => {
                 dispatch(incrementByAmount(5));
                 console.log("state updated!");
